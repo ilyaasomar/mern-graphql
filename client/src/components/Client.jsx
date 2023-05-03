@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_CLIENTS } from "../queries/clientQueries";
 import ClientRow from "./ClientRow";
-import Spinner from "./Spinner";
-export default function Clients() {
+import { GET_CLIENTS } from "../queries/clientQueries";
+export default function Client() {
   const { loading, error, data } = useQuery(GET_CLIENTS);
-  if (loading) return <p><Spinner /></p>;
-  if (error) return <p>Something Went Wrong</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong...</p>;
+  console.log(data);
+
   return (
     <>
       {!loading && !error && (
@@ -20,7 +21,7 @@ export default function Clients() {
             </tr>
           </thead>
           <tbody>
-            {data.clients.map((client) => (
+            {data?.clients?.map((client) => (
               <ClientRow key={client.id} client={client} />
             ))}
           </tbody>
